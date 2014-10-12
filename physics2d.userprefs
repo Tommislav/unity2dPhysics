@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\CharacterController2D.cs">
+    <Files>
+      <File FileName="Assets\Script\CharacterController2D.cs" Line="38" Column="3" />
+      <File FileName="Assets\Script\Player.cs" Line="39" Column="3" />
+      <File FileName="Assets\Script\CharacterController2D.cs" Line="91" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
