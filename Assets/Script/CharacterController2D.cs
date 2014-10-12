@@ -42,8 +42,6 @@ public class CharacterController2D : MonoBehaviour {
 				_velocity.y = DoCollisionY (topLeft, 3, spacing, _velocity.y);
 		}
 
-
-
 		this.transform.Translate (_velocity.x, _velocity.y, 0f, Space.World);
 	}
 
