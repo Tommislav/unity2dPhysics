@@ -37,6 +37,7 @@ public class CharacterController2D : MonoBehaviour {
 		_state.Reset();
 		PreCalcPos ();
 		Vector2 velocity = GetVelocity();
+		_forces[FORCE_MOVEMENT] = new Vector2(); // clear
 
 		if (velocity.x != 0) {
 			velocity.x = DoCollisionX((velocity.x < 0 ? -1 : 1), NumRaysY, velocity.x);
@@ -46,8 +47,6 @@ public class CharacterController2D : MonoBehaviour {
 		velocity.y = DoCollisionY ((velocity.y <= 0 ? -1 : 1), NumRaysX, velocity.y);
 
 		this.transform.Translate (velocity.x, velocity.y, 0f, Space.World);
-
-		_forces[FORCE_MOVEMENT] = new Vector2(); // clear
 	}
 
 
