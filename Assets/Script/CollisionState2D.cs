@@ -15,4 +15,13 @@ public class CollisionState2D {
 	public void Reset() {
 		IsCollidingUp = IsCollidingDown = IsCollidingLeft = IsCollidingRight = false;
 	}
+
+	public void SetCollisionX(int dir) {
+		if (dir < 0) IsCollidingLeft = true;
+		else if (dir > 0) IsCollidingRight = true;
+	}
+	public void SetCollisionY(int dir) {
+		if (dir < 0) IsCollidingDown = true;
+		else if (dir > 0) IsCollidingUp = true;
+	}
 }
