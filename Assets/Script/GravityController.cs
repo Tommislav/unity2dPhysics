@@ -8,7 +8,7 @@ public class GravityController : MonoBehaviour {
 	public float MaxFallSpeed = 1.0f;
 
 	private World _world;
-	private CharacterController2D _characterController;
+	private MoveController2D _moveController;
 	private Vector2 _force;
 
 	void Start () 
@@ -25,18 +25,18 @@ public class GravityController : MonoBehaviour {
 			throw new UnityException ("could not find component World in game object world");
 		}
 
-		_characterController = GetComponent<CharacterController2D> ();
+		_moveController = GetComponent<MoveController2D> ();
 	}
 
 	void Update () 
 	{
-		if (!_characterController.Collision.IsOnGround) {
+		if (!_moveController.Collision.IsOnGround) {
 			_force.y += _world.gravity * GravityScale;
 			if (_force.y < -MaxFallSpeed) _force.y = -MaxFallSpeed;
-			_characterController.AddForce(_force, CharacterController2D.FORCE_MOVEMENT);
+			_moveController.AddMoveVelocity(_force);
 		} else {
-			_force.y = 0f;
-			_characterController.AddForce(_force, CharacterController2D.FORCE_MOVEMENT);
+			//_force.y = 0f;
+			//_moveController.AddMoveVelocity(_force);
 		}
 	}
 

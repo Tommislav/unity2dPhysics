@@ -6,7 +6,6 @@ using System.Collections.Generic;
 [RequireComponent (typeof (BoxCollider2D))]
 public class CharacterController2D : MonoBehaviour {
 
-	public const string FORCE_MOVEMENT = "movement";
 
 	public LayerMask collisionMask;
 	public CollisionState2D Collision { get { return _state; } }
@@ -23,30 +22,28 @@ public class CharacterController2D : MonoBehaviour {
 	private Vector2 _br;
 	private Vector2 _tr;
 	private float _skinWidth = 0.02f;
-
-	private Dictionary<string,Vector2> _forces;
+	
+	private Vector2 _velocity;
 
 	void Start () {
 		_state = new CollisionState2D();
 		_collider = GetComponent<BoxCollider2D>();
-		_forces = new Dictionary<string, Vector2>();
+		_velocity = new Vector2();
 	}
 
 	void LateUpdate () {
 
 		_state.Reset();
 		PreCalcPos ();
-		Vector2 velocity = GetVelocity();
-		_forces[FORCE_MOVEMENT] = new Vector2(); // clear
 
-		if (velocity.x != 0) {
-			velocity.x = DoCollisionX((velocity.x < 0 ? -1 : 1), NumRaysY, velocity.x);
+		if (_velocity.x != 0) {
+			_velocity.x = DoCollisionX((_velocity.x < 0 ? -1 : 1), NumRaysY, _velocity.x);
 		}
 
 		int numChecksX = 3;
-		velocity.y = DoCollisionY ((velocity.y <= 0 ? -1 : 1), NumRaysX, velocity.y);
+		_velocity.y = DoCollisionY ((_velocity.y <= 0 ? -1 : 1), NumRaysX, _velocity.y);
 
-		this.transform.Translate (velocity.x, velocity.y, 0f, Space.World);
+		MoveBy(_velocity.x, _velocity.y);
 	}
 
 
@@ -115,43 +112,31 @@ public class CharacterController2D : MonoBehaviour {
 
 
 
-	public Vector2 GetForce(string key)
+	public Vector2 GetVelocity()
 	{
-		if (_forces[key] == null) {
-			_forces[key] = new Vector2();
-		}
-		return _forces[key];
+		return _velocity;
 	}
 
-	public void SetForce(Vector2 force, string key) {
-		_forces[key] = force;
+	public void SetVelocity(Vector2 velocity) {
+		_velocity = velocity;
 	}
 
-	public void AddForce(Vector2 force, string key) {
-		Vector2 v = GetForce(key);
-		SetForce(v + force, key);
+	public void AddVelocity(Vector2 velocity) {
+		_velocity += velocity;
 	}
 
-	public void ClearForce(string key) {
-		_forces.Remove(key);
+	public void ClearVelocity(string key) {
+		_velocity = new Vector2();
 	}
-
-	private Vector2 GetVelocity() {
-		Vector2 vec = new Vector2();
-		foreach(var force in _forces.Values) {
-			vec += force;
-		}
-		return vec;
-
-	}
-
 
 
 
 	public void MoveBy(float x, float y) {
+		this.transform.Translate (x, y, 0f, Space.World);
 	}
 
 	public void MoveTo(float x, float y) {
+		this.transform.position = new Vector3(x,y,0f);
 	}
 
 
