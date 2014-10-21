@@ -20,6 +20,8 @@ public class MoveController2D : MonoBehaviour {
 	private CharacterController2D _charController;
 	private World _world;
 	private Vector2 _moveVelocity;
+	private Vector2 _externalForce;
+	private Vector2 _velocity;
 
 	private int _jumpPressedFrame;
 	private int _leftPressedFrame;
@@ -36,6 +38,9 @@ public class MoveController2D : MonoBehaviour {
 	{
 		_charController = GetComponent<CharacterController2D>();
 		_world = GameObject.FindWithTag ("world").GetComponent<World>();
+		_moveVelocity = new Vector2();
+		_externalForce = new Vector2();
+
 	}
 
 
@@ -55,14 +60,19 @@ public class MoveController2D : MonoBehaviour {
 		return _moveVelocity;
 	}
 
+	public void SetExternalForce(Vector2 v) {
+		_externalForce = v;
+	}
+
 
 	void Update () 
 	{
 		ApplyGravity();
 		ApplyFriction();
 		ApplyMoveConstraints();
-		ClampVector(ref _moveVelocity, MaxVelocity);
-		_charController.SetVelocity(_moveVelocity);
+		_velocity = _moveVelocity + _externalForce;
+		ClampVector(ref _velocity, MaxVelocity);
+		_charController.SetVelocity(_velocity);
 	}
 
 	private void ClampVector(ref Vector2 value, Vector2 clamp) 
