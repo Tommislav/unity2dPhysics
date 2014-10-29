@@ -10,9 +10,10 @@ public class TreadmillController : MonoBehaviour {
 	void Update () {
 		if (_collidingObject != null) {
 			MoveController2D move = _collidingObject.GetComponent<MoveController2D>();
-			if (move.Collision.IsOnGround) {
-				move.AddMoveVelocity(new Vector2(movement, 0));
-			}
+			move.SetExternalForce(new Vector2(movement, 0));
+			//if (move.Collision.IsOnGround) {
+			//	move.AddMoveVelocity(new Vector2(movement, 0));
+			//}
 
 		}
 	}
@@ -25,8 +26,8 @@ public class TreadmillController : MonoBehaviour {
 
 	public void CharacterController2dExitY(GameObject colliding) 
 	{
-		//MoveController2D move = _collidingObject.GetComponent<MoveController2D>();
-		//move.SetExternalForce(new Vector2(0, 0));
+		MoveController2D move = _collidingObject.GetComponent<MoveController2D>();
+		move.SetExternalForce(new Vector2(0, 0));
 		_collidingObject = null;
 	}
 }

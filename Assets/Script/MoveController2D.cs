@@ -101,6 +101,7 @@ public class MoveController2D : MonoBehaviour {
 
 	public void Jump()
 	{
+		float normalizedGravity = _world.gravity < 0 ? -1 : 1;
 		int frameCount = Time.frameCount;
 		bool jumpKeyDown = isPressedSinceLast(_jumpPressedFrame);
 		bool canJump = Collision.IsOnGround;
@@ -117,7 +118,7 @@ public class MoveController2D : MonoBehaviour {
 
 		if (canAddJumpForce)
 		{
-			_moveVelocity.y += JumpStrength;
+			_moveVelocity.y += JumpStrength * normalizedGravity;
 		}
 	}
 
@@ -146,13 +147,17 @@ public class MoveController2D : MonoBehaviour {
 		float gravity = _world.gravity;
 		if (GravityScale == 0.0f) {
 			return;
-		} 
+		}
 
 		if (GravityScale != 1.0f) {
 			gravity *= GravityScale;
 		}
 
 		_moveVelocity.y -= gravity;
+
+		if (Collision.IsOnGround && _moveVelocity.y < 0f) {
+			_moveVelocity.y = 0f;
+		}
 	}
 
 

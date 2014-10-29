@@ -1,26 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\CharacterController2D.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\MoveController2D.cs">
     <Files>
-      <File FileName="Assets\Script\CharacterController2D.cs" Line="209" Column="54" />
-      <File FileName="Assets\Script\CollisionState2D.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\CharacterController2D.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\TreadmillController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\MoveController2D.cs" Line="104" Column="55" />
       <File FileName="Assets\Script\PlayerInput.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\MoveController2D.cs" Line="1" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="Script" expanded="True">
-              <Node name="CharacterController2D.cs" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

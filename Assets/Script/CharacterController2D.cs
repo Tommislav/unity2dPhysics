@@ -8,6 +8,11 @@ public class CharacterController2D : MonoBehaviour {
 
 
 	public LayerMask collisionMask;
+	public LayerMask cloudCollisionMask;
+	private LayerMask _downwardLayerMask;
+
+
+
 	public CollisionState2D Collision { get { return _state; } }
 	public int NumRaysX = 3;
 	public int NumRaysY = 5;
@@ -34,6 +39,9 @@ public class CharacterController2D : MonoBehaviour {
 		_state = new CollisionState2D();
 		_collider = GetComponent<BoxCollider2D>();
 		_velocity = new Vector2();
+
+		_downwardLayerMask = new LayerMask();
+		_downwardLayerMask.value = collisionMask.value | cloudCollisionMask.value;
 	}
 
 	void LateUpdate () {
@@ -70,16 +78,19 @@ public class CharacterController2D : MonoBehaviour {
 
 
 	private float DoCollisionY(int dir, int numChecks, float rayLength) {
-		Vector2 checkFrom = (dir <= 0) ? _bl : _tl;
+		bool down = dir <= 0;
+		Vector2 checkFrom = (down) ? _bl : _tl;
 		var normalVec = new Vector2 (0, dir);
 		float absLen = Mathf.Abs (rayLength);
 		absLen += _skinWidth;
 
 		float spacing = (_rect.width -  2 * _skinWidth) / (numChecks - 1);
+		LayerMask collY = (down) ? _downwardLayerMask : collisionMask;
+
 
 		for (int i=0; i < numChecks; i++) {
 			var from = new Vector2(checkFrom.x + (spacing*i), checkFrom.y);
-			var rayHit = Physics2D.Raycast(from, normalVec, absLen, collisionMask);
+			var rayHit = Physics2D.Raycast(from, normalVec, absLen, collY);
 			if (rayHit) {
 				var dist = Mathf.Abs(from.y - rayHit.point.y);
 				if (dist < absLen) absLen = dist;
