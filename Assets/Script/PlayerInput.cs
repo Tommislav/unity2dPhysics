@@ -25,5 +25,11 @@ public class PlayerInput : MonoBehaviour {
 		if (Input.GetKey (KeyCode.UpArrow)) {
 			_controller.Jump();
 		}
+
+		if (Input.GetKey(KeyCode.UpArrow)) {
+			_controller.ClimbUp();
+		} else if (Input.GetKey(KeyCode.DownArrow)) {
+			_controller.ClimbDown();
+		}
 	}
 }

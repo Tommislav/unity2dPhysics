@@ -15,6 +15,8 @@ public class MoveController2D : MonoBehaviour {
 	public float JumpTime = 0.1f;
 
 
+	public string LadderLayerName = "Ladder";
+
 
 
 	private CharacterController2D _charController;
@@ -29,6 +31,10 @@ public class MoveController2D : MonoBehaviour {
 	private bool _isJumping;
 	private bool _canAddJumpForce;
 	private float _jumpStartTime;
+
+	private bool _onLadder;
+	private float _ladderX;
+	private bool _climbingLadder;
 
 
 	public CollisionState2D Collision { get { return _charController.Collision; } }
@@ -99,6 +105,26 @@ public class MoveController2D : MonoBehaviour {
 		_moveVelocity.x += MoveAcceleration;
 	}
 
+	public void ClimbUp()
+	{
+		if (_onLadder) {
+			if (!_climbingLadder) {
+				_climbingLadder = true;
+				_moveVelocity.x = _moveVelocity.y = 0;
+			}
+			transform.position = new Vector3(_ladderX, transform.position.y, transform.position.z);
+			_moveVelocity.y = 0.2f;
+		}
+	}
+
+	public void ClimbDown()
+	{
+		if (_onLadder) {
+			transform.position = new Vector3(_ladderX, transform.position.y, transform.position.z);
+			_moveVelocity.y = -0.2f;
+		}
+	}
+
 	public void Jump()
 	{
 		float normalizedGravity = _world.gravity < 0 ? -1 : 1;
@@ -153,6 +179,10 @@ public class MoveController2D : MonoBehaviour {
 			gravity *= GravityScale;
 		}
 
+		if (_moveVelocity.y <= 0 && _climbingLadder) {
+			return;
+		}
+
 		_moveVelocity.y -= gravity;
 
 		if (Collision.IsOnGround && _moveVelocity.y < 0f) {
@@ -169,5 +199,26 @@ public class MoveController2D : MonoBehaviour {
 
 		if (_moveVelocity.x > MaxWalkSpeed) { _moveVelocity.x = MaxWalkSpeed; }
 		if (_moveVelocity.x < -MaxWalkSpeed) { _moveVelocity.x = -MaxWalkSpeed; }
+	}
+
+
+
+	public void OnTriggerEnter2D(Collider2D other)
+	{
+		string name = LayerMask.LayerToName(other.gameObject.layer);
+		if (name == LadderLayerName) {
+			_onLadder = true;
+			_ladderX = other.transform.position.x;
+		}
+	}
+
+	public void OnTriggerExit2D(Collider2D other)
+	{
+		string name = LayerMask.LayerToName(other.gameObject.layer);
+		if (name == LadderLayerName) {
+			_onLadder = false;
+			_climbingLadder = false;
+			_ladderX = 0f;
+		}
 	}
 }

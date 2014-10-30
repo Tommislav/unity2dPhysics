@@ -9,6 +9,20 @@ TextureImporter:
     21300008: sign_right
     21300010: sign_left
     21300012: sign_left_hilight
+    21300014: ladder
+    21300016: treadmill_left
+    21300018: treadmill_mid
+    21300020: treadmill_right
+    21300022: tiles_4
+    21300024: sign_right
+    21300026: tiles_6
+    21300028: tiles_7
+    21300030: tiles_8
+    21300032: tiles_9
+    21300034: tiles_10
+    21300036: tiles_11
+    21300038: sign_left
+    21300040: tiles_13
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,7 +64,17 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: tread_left
+    - name: ladder
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 35
+        height: 64
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: treadmill_left
       rect:
         serializedVersion: 2
         x: 412
@@ -60,7 +84,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tread_mid
+    - name: treadmill_mid
       rect:
         serializedVersion: 2
         x: 464
@@ -70,7 +94,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tread_right
+    - name: treadmill_right
       rect:
         serializedVersion: 2
         x: 533
@@ -80,7 +104,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: sign_right_hilight
+    - name: tiles_4
       rect:
         serializedVersion: 2
         x: 432
@@ -110,7 +134,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: sign_left_hilight
+    - name: tiles_13
       rect:
         serializedVersion: 2
         x: 503
