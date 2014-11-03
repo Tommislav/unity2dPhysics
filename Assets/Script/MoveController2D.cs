@@ -36,6 +36,8 @@ public class MoveController2D : MonoBehaviour {
 	private float _ladderX;
 	private bool _climbingLadder;
 
+	private int _dirX = 1;
+
 
 	public CollisionState2D Collision { get { return _charController.Collision; } }
 
@@ -97,12 +99,21 @@ public class MoveController2D : MonoBehaviour {
 	{
 		_leftPressedFrame = Time.frameCount;
 		_moveVelocity.x -= MoveAcceleration;
+		if (_dirX != -1) {
+			_dirX = -1;
+			this.gameObject.SendMessage("MoveHor", _dirX, SendMessageOptions.DontRequireReceiver);
+		}
+
 	}
 
 	public void MoveRight()
 	{
 		_rightPressedFrame = Time.frameCount;
 		_moveVelocity.x += MoveAcceleration;
+		if (_dirX != 1) {
+			_dirX = 1;
+			this.gameObject.SendMessage("MoveHor", _dirX, SendMessageOptions.DontRequireReceiver);
+		}
 	}
 
 	public void ClimbUp()

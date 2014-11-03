@@ -19,10 +19,11 @@ TextureImporter:
     21300028: tiles_7
     21300030: tiles_8
     21300032: tiles_9
-    21300034: tiles_10
+    21300034: sign_right
     21300036: tiles_11
     21300038: sign_left
     21300040: tiles_13
+    21300042: fist
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -104,43 +105,33 @@ TextureImporter:
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tiles_4
+    - name: sign_left
       rect:
         serializedVersion: 2
-        x: 432
-        y: 449
-        width: 5
-        height: 7
+        x: 479
+        y: 448
+        width: 23
+        height: 8
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: sign_right
       rect:
         serializedVersion: 2
-        x: 438
-        y: 449
+        x: 437
+        y: 448
         width: 23
-        height: 7
+        height: 8
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: sign_left
+    - name: fist
       rect:
         serializedVersion: 2
-        x: 479
-        y: 449
-        width: 23
-        height: 7
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: tiles_13
-      rect:
-        serializedVersion: 2
-        x: 503
-        y: 449
-        width: 5
-        height: 7
+        x: 448
+        y: 391
+        width: 54
+        height: 47
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
