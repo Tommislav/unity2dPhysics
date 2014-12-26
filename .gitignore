@@ -4,3 +4,6 @@ Library
 physics2d.userprefs
 Temp
 out
+obj
+*.suo
+Assets/UnityVS/
