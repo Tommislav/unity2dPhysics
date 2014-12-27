@@ -21,10 +21,13 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 		public override void Process() {
 			if (data.collisionState.IsOnGround) {
-				data.velocity.y = -_world.gravity;
+				_veclocityY = -_world.gravity;
 			} else {
-				data.velocity.y -= _world.gravity;
+				_veclocityY = data.velocity.y - _world.gravity;
 			}
+
+			if (_veclocityY < -0.4f) { _veclocityY = -0.4f;	} // clamp
+			data.velocity.y = _veclocityY;
 		}
 
 

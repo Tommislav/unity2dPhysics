@@ -43,6 +43,10 @@ namespace Assets.Script.CharacterController2D {
 			return (status.isDown && status.downFrame == Time.frameCount);
 		}
 
+		public int GetFrameKeyPressed(KeyCode keyCode) {
+			return GetInputStatus(keyCode).downFrame;
+		}
+
 
 
 		private InputStatus GetInputStatus(KeyCode keyCode) {

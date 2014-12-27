@@ -9,6 +9,7 @@ namespace Assets.Script.CharacterController2D.Platform {
 		protected override void SetupProcesses() {
 
 			this.AddProcessable(new ProcessLadderClimbing());
+			this.AddProcessable(new ProcessJumpThroughClouds());
 			this.AddProcessable(new ProcessGravity());
 			this.AddProcessable(new ProcessMovement());
 			this.AddProcessable(new ProcessFriction());

@@ -9,6 +9,7 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 		private bool _onLadder;
 		private float _ladderX;
+		private int _ladderKeyPress;
 
 		public override bool IsRunning() {
 			return _onLadder;
@@ -42,17 +43,17 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 				SetIsClimbing(false);
 			}
 
-
-			bool keyUp = data.inputMap.GetIsDown(KeyCode.UpArrow);
-			bool keyDown = data.inputMap.GetIsDown(KeyCode.DownArrow);
-
 			if (!GetIsClimbing()) {
-				if (keyUp || keyDown) {
+				if (GetShouldStartClimbLadder()) {
 					SetIsClimbing(true);
 				}
 			}
 
 			if (GetIsClimbing()) {
+
+				bool keyUp = data.inputMap.GetIsDown(KeyCode.UpArrow);
+				bool keyDown = data.inputMap.GetIsDown(KeyCode.DownArrow);
+
 				if (keyUp) {
 					data.velocity.y = 0.1f;
 				} else if (keyDown) {
@@ -66,6 +67,19 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 					data.gameObject.transform.position = new Vector3(_ladderX, t.position.y, t.position.z);
 				}
 			}
+		}
+
+
+		private bool GetShouldStartClimbLadder() {
+			int frameUp = data.inputMap.GetFrameKeyPressed(KeyCode.UpArrow);
+			int frameDown = data.inputMap.GetFrameKeyPressed(KeyCode.DownArrow);
+
+			int frame = (frameUp > frameDown) ? frameUp : frameDown;
+			if (frame > 0 && frame != _ladderKeyPress) {
+				_ladderKeyPress = frame;
+				return true;
+			}
+			return false;
 		}
 
 

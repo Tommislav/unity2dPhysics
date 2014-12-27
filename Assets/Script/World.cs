@@ -3,5 +3,5 @@ using System.Collections;
 
 public class World : MonoBehaviour {
 
-	public float gravity = -9;
+	public float gravity = 0.09f;
 }

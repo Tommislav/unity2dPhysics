@@ -13,6 +13,8 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 		private float _currJumpTimeLeft;
 		private float _jumpVelocity;
 
+		private bool _jumpDownThroughClouds;
+
 		protected override void Setup() {
 			SetJumpFlag(0);
 			_jumpVelocity = 0;
@@ -24,10 +26,14 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 			bool climbingLadder = data.GetFlag("onLadder");
 			bool onGround = data.collisionState.IsOnGround;
 			onGround |= climbingLadder;
+
+			bool jumpDisabled = data.GetFlag("jumpDisabled");
+			
 			
 			data.debug.AddLine("isJumping: " + wasJumping);
 			data.debug.AddLine("onGround: " + onGround);
 
+			if (jumpDisabled) { return false; }
 			return wasJumping || (onGround && jumpKeyPressedThisFrame);
 		}
 
