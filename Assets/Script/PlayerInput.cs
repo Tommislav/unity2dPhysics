@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Script.CharacterController2D;
 
 
 
 public class PlayerInput : MonoBehaviour {
 
-	private MoveController2D _controller;
+	//private MoveController2D _controller;
+	public Assets.Script.CharacterController2D.AbsCharacterController characterController;
 
 	void Start () 
 	{
-		_controller = GetComponent<MoveController2D>();
+		//_controller = GetComponent<MoveController2D>();
 	}
 	
 
@@ -17,19 +19,22 @@ public class PlayerInput : MonoBehaviour {
 	{
 
 		if (Input.GetKey (KeyCode.LeftArrow)) {
-			_controller.MoveLeft();
-		} else if (Input.GetKey (KeyCode.RightArrow)) {
-			_controller.MoveRight();
+			characterController.OnKeyDown(KeyCode.LeftArrow);
+		} 
+		
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			characterController.OnKeyDown(KeyCode.RightArrow);
 		}
 
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			_controller.Jump();
-		}
 
 		if (Input.GetKey(KeyCode.UpArrow)) {
-			_controller.ClimbUp();
-		} else if (Input.GetKey(KeyCode.DownArrow)) {
-			_controller.ClimbDown();
+			characterController.OnKeyDown(KeyCode.UpArrow);
+		} 
+		if (Input.GetKey(KeyCode.DownArrow)) {
+			characterController.OnKeyDown(KeyCode.DownArrow);
+		}
+		if (Input.GetKey(KeyCode.Space)) {
+			characterController.OnKeyDown(KeyCode.Space);
 		}
 	}
 }

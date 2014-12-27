@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (CharacterController2D))]
+[RequireComponent (typeof (PhysicsController2D))]
 public class MoveController2D : MonoBehaviour {
 
 	
@@ -19,7 +19,7 @@ public class MoveController2D : MonoBehaviour {
 
 
 
-	private CharacterController2D _charController;
+	private PhysicsController2D _charController;
 	private World _world;
 	private Vector2 _moveVelocity;
 	private Vector2 _externalForce;
@@ -35,6 +35,7 @@ public class MoveController2D : MonoBehaviour {
 	private bool _onLadder;
 	private float _ladderX;
 	private bool _climbingLadder;
+	private float _ladderClimbingSpeedY;
 
 	private int _dirX = 1;
 
@@ -42,9 +43,8 @@ public class MoveController2D : MonoBehaviour {
 	public CollisionState2D Collision { get { return _charController.Collision; } }
 
 
-	void Start () 
-	{
-		_charController = GetComponent<CharacterController2D>();
+	void Start () {
+		_charController = GetComponent<PhysicsController2D>();
 		_world = GameObject.FindWithTag ("world").GetComponent<World>();
 		_moveVelocity = new Vector2();
 		_externalForce = new Vector2();
@@ -53,18 +53,15 @@ public class MoveController2D : MonoBehaviour {
 
 
 
-	public void SetMoveVelocity(Vector2 v)
-	{
+	public void SetMoveVelocity(Vector2 v) {
 		_moveVelocity = v;
 	}
 
-	public void AddMoveVelocity(Vector2 v)
-	{
+	public void AddMoveVelocity(Vector2 v) {
 		_moveVelocity += v;
 	}
 
-	public Vector2 GetMoveVelocity()
-	{
+	public Vector2 GetMoveVelocity() {
 		return _moveVelocity;
 	}
 
@@ -73,8 +70,8 @@ public class MoveController2D : MonoBehaviour {
 	}
 
 
-	void Update () 
-	{
+	void Update () {
+		ApplyLadderClimbing();
 		ApplyGravity();
 		ApplyFriction();
 		ApplyMoveConstraints();
@@ -83,8 +80,9 @@ public class MoveController2D : MonoBehaviour {
 		_charController.SetVelocity(_velocity);
 	}
 
-	private void ClampVector(ref Vector2 value, Vector2 clamp) 
-	{
+	
+
+	private void ClampVector(ref Vector2 value, Vector2 clamp) {
 		if (value.x < -clamp.x) { value.x = -clamp.x;}
 		else if (value.x > clamp.x) { value.x = clamp.x; }
 
@@ -95,8 +93,7 @@ public class MoveController2D : MonoBehaviour {
 
 
 
-	public void MoveLeft()
-	{
+	public void MoveLeft() {
 		_leftPressedFrame = Time.frameCount;
 		_moveVelocity.x -= MoveAcceleration;
 		if (_dirX != -1) {
@@ -121,10 +118,9 @@ public class MoveController2D : MonoBehaviour {
 		if (_onLadder) {
 			if (!_climbingLadder) {
 				_climbingLadder = true;
-				_moveVelocity.x = _moveVelocity.y = 0;
+				_ladderClimbingSpeedY = 0.02f; // will be updated in ApplyLadderClimbing()
 			}
 			transform.position = new Vector3(_ladderX, transform.position.y, transform.position.z);
-			_moveVelocity.y = 0.2f;
 		}
 	}
 
@@ -132,7 +128,7 @@ public class MoveController2D : MonoBehaviour {
 	{
 		if (_onLadder) {
 			transform.position = new Vector3(_ladderX, transform.position.y, transform.position.z);
-			_moveVelocity.y = -0.2f;
+			_ladderClimbingSpeedY = -0.02f; // will be updated in ApplyLadderClimbing()
 		}
 	}
 
@@ -141,7 +137,7 @@ public class MoveController2D : MonoBehaviour {
 		float normalizedGravity = _world.gravity < 0 ? -1 : 1;
 		int frameCount = Time.frameCount;
 		bool jumpKeyDown = isPressedSinceLast(_jumpPressedFrame);
-		bool canJump = Collision.IsOnGround;
+		bool canJump = Collision.IsOnGround && !_climbingLadder;
 		float now = Time.realtimeSinceStartup;
 		_jumpPressedFrame = frameCount;
 
@@ -153,8 +149,7 @@ public class MoveController2D : MonoBehaviour {
 
 		bool canAddJumpForce = now - _jumpStartTime <= JumpTime;
 
-		if (canAddJumpForce)
-		{
+		if (canAddJumpForce) {
 			_moveVelocity.y += JumpStrength * normalizedGravity;
 		}
 	}
@@ -163,6 +158,15 @@ public class MoveController2D : MonoBehaviour {
 		int lastFrame = Time.frameCount - 1;
 		return (when >= lastFrame);
 	}
+
+
+	private void ApplyLadderClimbing() {
+		if (_ladderClimbingSpeedY < 0.0f || _ladderClimbingSpeedY > 0.0f) {
+			_moveVelocity.y = _ladderClimbingSpeedY;
+		}
+		_ladderClimbingSpeedY = 0.0f;
+	}
+
 
 	protected void ApplyFriction() {
 		float ALMOST_NO_MOVEMENT = 0.01f;
@@ -182,7 +186,7 @@ public class MoveController2D : MonoBehaviour {
 
 	protected void ApplyGravity() {
 		float gravity = _world.gravity;
-		if (GravityScale == 0.0f) {
+		if (GravityScale == 0.0f || _onLadder) {
 			return;
 		}
 
@@ -190,11 +194,7 @@ public class MoveController2D : MonoBehaviour {
 			gravity *= GravityScale;
 		}
 
-		if (_moveVelocity.y <= 0 && _climbingLadder) {
-			return;
-		}
-
-		_moveVelocity.y -= gravity;
+        _moveVelocity.y -= gravity;
 
 		if (Collision.IsOnGround && _moveVelocity.y < 0f) {
 			_moveVelocity.y = 0f;

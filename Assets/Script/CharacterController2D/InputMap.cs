@@ -13,17 +13,22 @@ namespace Assets.Script.CharacterController2D {
 
 		public void ResetStatus() {
 			foreach (KeyValuePair<KeyCode, InputStatus> entry in _map) {
-				entry.Value.isDown = false;
+				if (entry.Value.isReset) {
+					entry.Value.isReset = false;
+				} else if (entry.Value.isDown) {
+					entry.Value.isDown = false;
+					entry.Value.isReset = true;
+				}
 			}
 		}
 
 
 		public void SetKeyIsDown(KeyCode keyCode) {
-			if (_map.ContainsKey(keyCode)) {
+			if (!_map.ContainsKey(keyCode)) {
 				_map[keyCode] = new InputStatus(keyCode);
 			}
 			InputStatus status = _map[keyCode];
-			if (!status.isDown) {
+			if (!status.isDown && !status.isReset) {
 				status.downFrame = Time.frameCount;
 			}
 			status.isDown = true;
@@ -55,6 +60,7 @@ namespace Assets.Script.CharacterController2D {
 			public KeyCode keyCode;
 			public bool isDown;
 			public int downFrame;
+			public bool isReset;
 		}
 	}
 }

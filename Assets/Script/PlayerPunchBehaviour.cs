@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerPunchBehaviour : MonoBehaviour {
 
@@ -7,7 +8,7 @@ public class PlayerPunchBehaviour : MonoBehaviour {
 
 	private int _punchEndFrame;
 	private float _fistPosX;
-
+	private CollisionState2D _collisionState;
 
 	void Start () {
 		Fist.renderer.enabled = false;

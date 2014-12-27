@@ -13,9 +13,11 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 			if (data.inputMap.GetIsDown(KeyCode.LeftArrow)) {
 				data.velocity.x = -0.1f;
+				data.dirX = -1;
 			}
 			if (data.inputMap.GetIsDown(KeyCode.RightArrow)) {
 				data.velocity.x = 0.1f;
+				data.dirX = 1;
 			}
 		}
 

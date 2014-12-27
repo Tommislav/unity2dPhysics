@@ -36,12 +36,19 @@ public class PhysicsController2D : MonoBehaviour {
 	private Vector2 _velocity;
 
 	void Start () {
-		_state = new CollisionState2D();
+		_state = getCollisionStateComponent();
 		_collider = GetComponent<BoxCollider2D>();
 		_velocity = new Vector2();
 
 		_downwardLayerMask = new LayerMask();
 		_downwardLayerMask.value = collisionMask.value | cloudCollisionMask.value;
+	}
+
+	private CollisionState2D getCollisionStateComponent() {
+		if (gameObject.GetComponent<CollisionStateComponent>() == null) {
+			gameObject.AddComponent<CollisionStateComponent>();
+		}
+		return gameObject.GetComponent<CollisionStateComponent>().CollisionState;
 	}
 
 	void LateUpdate () {

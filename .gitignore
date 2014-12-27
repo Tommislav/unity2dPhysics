@@ -6,4 +6,7 @@ Temp
 out
 obj
 *.suo
+*.sln
+*.csproj
+*.csproj.user
 Assets/UnityVS/
