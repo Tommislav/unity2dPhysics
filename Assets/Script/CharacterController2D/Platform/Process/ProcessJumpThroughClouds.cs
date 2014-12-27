@@ -30,7 +30,7 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 				if (data.inputMap.GetIsDown(KeyCode.DownArrow) && data.inputMap.GetDownThisFrame(KeyCode.Space)) {
 					data.disableCloudCollision = true;
-					_fallingThrough = 2;
+					_fallingThrough = 4;
 					data.flags["jumpDisabled"] = 1;
 				}
 			}

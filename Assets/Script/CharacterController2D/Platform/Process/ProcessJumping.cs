@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Assets.Script.CharacterController2D.Platform.Process {
 	class ProcessJumping : Processable {
 
-		private const float JUMP_TIME = 0.20f;
+		private const int JUMP_TIME = 16;
 		private const float JUMP_STR = 0.08f;
 		private const float MAX_JUMP_STR = 0.30f;
 		private float _currJumpTimeLeft;
@@ -37,6 +37,7 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 			return wasJumping || (onGround && jumpKeyPressedThisFrame);
 		}
 
+
 		public override void Process() {
 			if (GetJumpFlag() == 0 && JumpKeyPressedThisFrame()) { // Started the jump this frame!
 				_currJumpTimeLeft = JUMP_TIME;
@@ -46,11 +47,11 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 			}
 
 			if (GetJumpFlag() == 1) {
-				_currJumpTimeLeft -= Time.deltaTime;
+				_currJumpTimeLeft--;
 				applyJumpVelocity();
 			}
 
-			if (_currJumpTimeLeft <= 0.0f || !JumpKeyDown()) {
+			if (_currJumpTimeLeft <= 0 || !JumpKeyDown()) {
 				SetJumpFlag(0);
 				_jumpVelocity = 0;
 			}

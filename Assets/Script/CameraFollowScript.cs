@@ -11,7 +11,7 @@ public class CameraFollowScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 		this.transform.position = new Vector3(follow.transform.position.x, follow.transform.position.y, this.transform.position.z);
 	}
 }
