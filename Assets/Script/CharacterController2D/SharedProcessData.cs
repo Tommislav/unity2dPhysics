@@ -9,12 +9,13 @@ namespace Assets.Script.CharacterController2D {
 		public CollisionState2D collisionState;
 		public InputMap inputMap;
 		public Dictionary<string, int> flags = new Dictionary<string,int>();
-		public Dictionary<string, bool> triggers = new Dictionary<string, bool>();
 		public CharacterDebug debug;
 
 		public Vector2 velocity = new Vector2();
 		public int dirX = 1;
 		public int dirY = 1;
+		public bool disableCollision;
+		public bool disableCloudCollision;
 
 		public bool GetFlag(string key) {
 			if (!flags.ContainsKey(key)) {

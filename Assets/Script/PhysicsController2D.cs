@@ -34,6 +34,8 @@ public class PhysicsController2D : MonoBehaviour {
 	private GameObject _lastHitY;
 	
 	private Vector2 _velocity;
+	private bool _disableCollision;
+	private bool _disableCloudCollision;
 
 	void Start () {
 		_state = getCollisionStateComponent();
@@ -57,11 +59,14 @@ public class PhysicsController2D : MonoBehaviour {
 		PreCalcPos ();
 		PrepareHitInfo();
 
-		if (_velocity.x != 0) {
-			_velocity.x = DoCollisionX((_velocity.x < 0 ? -1 : 1), NumRaysY, _velocity.x);
-		}
+		if (!_disableCollision) {
+			if (_velocity.x != 0) {
+				_velocity.x = DoCollisionX((_velocity.x < 0 ? -1 : 1), NumRaysY, _velocity.x);
+			}
 
-		_velocity.y = DoCollisionY ((_velocity.y <= 0 ? -1 : 1), NumRaysX, _velocity.y);
+			_velocity.y = DoCollisionY((_velocity.y <= 0 ? -1 : 1), NumRaysX, _velocity.y);
+		}
+		
 
 		HandleHitInfo();
 
@@ -92,7 +97,7 @@ public class PhysicsController2D : MonoBehaviour {
 		absLen += _skinWidth;
 
 		float spacing = (_rect.width -  2 * _skinWidth) / (numChecks - 1);
-		LayerMask collY = (down) ? _downwardLayerMask : collisionMask;
+		LayerMask collY = (down && !_disableCloudCollision) ? _downwardLayerMask : collisionMask;
 
 
 		for (int i=0; i < numChecks; i++) {
@@ -154,7 +159,13 @@ public class PhysicsController2D : MonoBehaviour {
 		_velocity = new Vector2();
 	}
 
+	public void SetDisableCollision(bool disabled) {
+		_disableCollision = disabled;
+	}
 
+	public void SetDisableCloudCollision(bool disabled) {
+		_disableCloudCollision = disabled;
+	}
 
 	public void MoveBy(float x, float y) {
 		this.transform.Translate (x, y, 0f, Space.World);

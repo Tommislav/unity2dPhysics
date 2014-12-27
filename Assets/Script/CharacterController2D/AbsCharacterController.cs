@@ -73,6 +73,8 @@ namespace Assets.Script.CharacterController2D {
 			}
 
 			_sharedData.inputMap.ResetStatus();
+			physicsController.SetDisableCollision(_sharedData.disableCollision);
+			physicsController.SetDisableCloudCollision(_sharedData.disableCloudCollision);
 			physicsController.SetVelocity(_sharedData.velocity);
 		}
 

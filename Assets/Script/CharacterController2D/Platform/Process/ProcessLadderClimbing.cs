@@ -82,6 +82,7 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 		private void SetIsClimbing(bool flag) {
 			data.flags["onLadder"] = flag ? 1 : 0;
+			data.disableCloudCollision = flag;
 		}
 
 		private bool GetIsClimbing() {
