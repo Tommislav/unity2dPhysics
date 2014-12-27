@@ -12,6 +12,8 @@ namespace Assets.Script.CharacterController2D {
 		public CharacterDebug debug;
 
 		public Vector2 velocity = new Vector2();
+		public Dictionary<int, Vector2> externalVelocity = new Dictionary<int, Vector2>();
+
 		public int dirX = 1;
 		public int dirY = 1;
 		public bool disableCollision;

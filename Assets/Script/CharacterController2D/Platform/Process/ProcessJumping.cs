@@ -13,11 +13,10 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 		private float _currJumpTimeLeft;
 		private float _jumpVelocity;
 
-		private bool _jumpDownThroughClouds;
-
 		protected override void Setup() {
 			SetJumpFlag(0);
 			_jumpVelocity = 0;
+			data.flags["jumpDisabled"] = 0;
 		}
 
 		public override bool IsRunning() {

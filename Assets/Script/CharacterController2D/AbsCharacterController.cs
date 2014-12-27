@@ -75,7 +75,19 @@ namespace Assets.Script.CharacterController2D {
 			_sharedData.inputMap.ResetStatus();
 			physicsController.SetDisableCollision(_sharedData.disableCollision);
 			physicsController.SetDisableCloudCollision(_sharedData.disableCloudCollision);
-			physicsController.SetVelocity(_sharedData.velocity);
+			physicsController.SetVelocity(GetVelocity());
+
+			_debug.AddLine(_sharedData.collisionState.Debug());
+		}
+
+		private Vector2 GetVelocity() {
+			Vector2 v = new Vector2();
+			v += _sharedData.velocity;
+
+			foreach (Vector2 extForce in _sharedData.externalVelocity.Values) {
+				v += extForce;
+			}
+			return v;
 		}
 
 
@@ -93,6 +105,27 @@ namespace Assets.Script.CharacterController2D {
 			string layerName = LayerMask.LayerToName(other.gameObject.layer);
 			for (int i = 0; i < _processables.Count; i++) {
 				_processables[i].OnTriggerExit2D(layerName, other);
+			}
+		}
+
+		public void OnPhysicsEvent(PhysicsEvent e) {
+			if (e.type == PhysicsEvent.EXTERNAL_FORCE) {
+				int id = e.uid;
+				Vector2 force = e.vector;
+				bool hasForce = !(force.x == 0 && force.y == 0);
+
+				if (!_sharedData.externalVelocity.ContainsKey(id)) {
+					if (hasForce) {
+						_sharedData.externalVelocity[id] = force;
+					}
+				} else {
+
+					if (hasForce) {
+						_sharedData.externalVelocity[id] = force;
+					} else {
+						_sharedData.externalVelocity.Remove(id);
+					}
+				}
 			}
 		}
 	}

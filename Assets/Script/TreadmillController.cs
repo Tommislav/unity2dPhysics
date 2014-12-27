@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Script.CharacterController2D;
 
 public class TreadmillController : MonoBehaviour {
 
@@ -7,27 +8,26 @@ public class TreadmillController : MonoBehaviour {
 
 	private GameObject _collidingObject;
 
-	void Update () {
+	/*void Update () {
 		if (_collidingObject != null) {
-			MoveController2D move = _collidingObject.GetComponent<MoveController2D>();
-			move.SetExternalForce(new Vector2(movement, 0));
-			//if (move.Collision.IsOnGround) {
-			//	move.AddMoveVelocity(new Vector2(movement, 0));
-			//}
-
+			Debug.Log("TreadmillController.update()");
+			
 		}
-	}
+	}*/
 
 
-	public void CharacterController2dEnterY(GameObject colliding) 
-	{
+	public void CharacterController2dEnterY(GameObject colliding) {
 		_collidingObject = colliding;
+		DispatchPhysicsEvent(new Vector2(movement, 0.0f));
 	}
 
-	public void CharacterController2dExitY(GameObject colliding) 
-	{
-		MoveController2D move = _collidingObject.GetComponent<MoveController2D>();
-		move.SetExternalForce(new Vector2(0, 0));
+	public void CharacterController2dExitY(GameObject colliding) {
+		DispatchPhysicsEvent(new Vector2(0.0f, 0.0f));
 		_collidingObject = null;
+	}
+
+	private void DispatchPhysicsEvent(Vector2 force) {
+		PhysicsEvent e = new PhysicsEvent(PhysicsEvent.EXTERNAL_FORCE, gameObject.GetInstanceID(), force); 
+		_collidingObject.SendMessage("OnPhysicsEvent", e, SendMessageOptions.DontRequireReceiver);
 	}
 }

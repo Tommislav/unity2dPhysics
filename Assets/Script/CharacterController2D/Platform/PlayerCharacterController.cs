@@ -14,7 +14,6 @@ namespace Assets.Script.CharacterController2D.Platform {
 			this.AddProcessable(new ProcessMovement());
 			this.AddProcessable(new ProcessFriction());
 			this.AddProcessable(new ProcessJumping());
-			
 
 			this.AddSharedData(new SharedProcessData());
 		}

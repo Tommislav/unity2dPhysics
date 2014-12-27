@@ -24,4 +24,11 @@ public class CollisionState2D {
 		if (dir < 0) IsCollidingDown = true;
 		else if (dir > 0) IsCollidingUp = true;
 	}
+
+	public string Debug() {
+		return "Coll=D:" + boolToStr(IsCollidingDown) + ", U:" + boolToStr(IsCollidingUp) + ", L:" + boolToStr(IsCollidingLeft) + ", R:" + boolToStr(IsCollidingRight);
+	}
+	private string boolToStr(bool flag) {
+		return flag ? "1" : "0";
+	}
 }

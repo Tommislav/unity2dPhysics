@@ -190,7 +190,7 @@ public class PhysicsController2D : MonoBehaviour {
 	
 	void HandleHitInfo ()
 	{
-		// X axis
+		// --- X axis ---
 
 		/*if (_hitX != _lastHitX && _hitX != null && _lastHitX != null) {
 			SendHitMessage("Exit", "X", _lastHitX);
@@ -214,7 +214,8 @@ public class PhysicsController2D : MonoBehaviour {
 		}
 
 
-		// Y axis
+		// --- Y axis ---
+
 		if (_hitY != null || _lastHitY != null) {
 			/*if (_hitY != _lastHitY) {
 				SendHitMessage("Exit", "Y", _lastHitY);
