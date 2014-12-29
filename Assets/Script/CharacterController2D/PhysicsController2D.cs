@@ -13,13 +13,13 @@ public class PhysicsController2D : MonoBehaviour {
 
 
 
-	public CollisionState2D Collision { get { return _state; } }
+	public CollisionInfo Collision { get { return _state; } }
 	public int NumRaysX = 3;
 	public int NumRaysY = 5;
 
 
 	private BoxCollider2D _collider;
-	private CollisionState2D _state;
+	private CollisionInfo _state;
 
 	private Rect _rect;
 	private Vector2 _tl;
@@ -46,11 +46,11 @@ public class PhysicsController2D : MonoBehaviour {
 		_downwardLayerMask.value = collisionMask.value | cloudCollisionMask.value;
 	}
 
-	private CollisionState2D getCollisionStateComponent() {
-		if (gameObject.GetComponent<CollisionStateComponent>() == null) {
-			gameObject.AddComponent<CollisionStateComponent>();
+	private CollisionInfo getCollisionStateComponent() {
+		if (gameObject.GetComponent<CollisionInfoComponent>() == null) {
+			gameObject.AddComponent<CollisionInfoComponent>();
 		}
-		return gameObject.GetComponent<CollisionStateComponent>().CollisionState;
+		return gameObject.GetComponent<CollisionInfoComponent>().CollisionState;
 	}
 
 	void LateUpdate () {

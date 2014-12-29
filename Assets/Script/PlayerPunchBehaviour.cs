@@ -8,7 +8,7 @@ public class PlayerPunchBehaviour : MonoBehaviour {
 
 	private int _punchEndFrame;
 	private float _fistPosX;
-	private CollisionState2D _collisionState;
+	private CollisionInfo _collisionState;
 
 	void Start () {
 		Fist.renderer.enabled = false;

@@ -6,7 +6,7 @@ namespace Assets.Script.CharacterController2D {
 	public class SharedProcessData {
 
 		public GameObject gameObject;
-		public CollisionState2D collisionState;
+		public CollisionInfo collisionState;
 		public InputMap inputMap;
 		public Dictionary<string, int> flags = new Dictionary<string,int>();
 		public CharacterDebug debug;

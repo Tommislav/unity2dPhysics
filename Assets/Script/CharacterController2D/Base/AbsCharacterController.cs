@@ -46,11 +46,11 @@ namespace Assets.Script.CharacterController2D {
 			return this;
 		}
 
-		private CollisionState2D getCollisionStateComponent() {
-			if (gameObject.GetComponent<CollisionStateComponent>() == null) {
-				gameObject.AddComponent<CollisionStateComponent>();
+		private CollisionInfo getCollisionStateComponent() {
+			if (gameObject.GetComponent<CollisionInfoComponent>() == null) {
+				gameObject.AddComponent<CollisionInfoComponent>();
 			}
-			return gameObject.GetComponent<CollisionStateComponent>().CollisionState;
+			return gameObject.GetComponent<CollisionInfoComponent>().CollisionState;
 		}
 
 
