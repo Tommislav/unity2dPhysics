@@ -190,10 +190,6 @@ public class PhysicsController2D : MonoBehaviour {
 	
 	void HandleHitInfo ()
 	{
-		GlobalDebug.AddDebugLine(2, "hitY " + debugGO(_hitY));
-		GlobalDebug.AddDebugLine(3, "lastHitY " + debugGO(_lastHitY));
-		GlobalDebug.AddDebugLine(4, "same: " + (_hitY == _lastHitY));
-
 		// --- X axis ---
 
 		/*if (_hitX != _lastHitX && _hitX != null && _lastHitX != null) {

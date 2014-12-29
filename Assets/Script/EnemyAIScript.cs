@@ -17,8 +17,11 @@ public class EnemyAIScript : MonoBehaviour {
 	private int _key;
 	private string _descr;
 
-	private int[] _operations = { JoypadCode.JUMP, JoypadCode.LEFT, JoypadCode.RIGHT };
-	private string[] _descriptions = { "jump", "left", "right" };
+	private const int JUMP_LEFT = -1;
+	private const int JUMP_RIGHT = -2;
+
+	private int[] _operations = { JoypadCode.JUMP, JoypadCode.LEFT, JoypadCode.RIGHT, JUMP_LEFT, JUMP_RIGHT };
+	private string[] _descriptions = { "jump", "left", "right", "jump left", "jump right" };
 
 	// Use this for initialization
 	void Start () {
@@ -31,7 +34,16 @@ public class EnemyAIScript : MonoBehaviour {
 		if (_isPerforming) {
 		
 			if (--_keyCnt > 0) {
-				characterController.OnKeyDown(_key);
+				if (_key == JUMP_LEFT) {
+					characterController.OnKeyDown(JoypadCode.JUMP);
+					characterController.OnKeyDown(JoypadCode.LEFT);
+				} else if (_key == JUMP_RIGHT) {
+					characterController.OnKeyDown(JoypadCode.JUMP);
+					characterController.OnKeyDown(JoypadCode.RIGHT);
+				} else {
+					characterController.OnKeyDown(_key);
+				}
+
 			} else {
 				_isPerforming = false;
 				_waiting = Random.Range(WaitFramesMin, WaitFramesMax);
