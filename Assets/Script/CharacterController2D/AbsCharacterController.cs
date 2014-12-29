@@ -55,8 +55,8 @@ namespace Assets.Script.CharacterController2D {
 
 
 
-		public void OnKeyDown(KeyCode keyCode) {
-			_sharedData.inputMap.SetKeyIsDown(keyCode);
+		public void OnKeyDown(int joypadCode) {
+			_sharedData.inputMap.SetKeyIsDown(joypadCode);
 		}
 
 

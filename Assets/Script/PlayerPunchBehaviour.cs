@@ -18,10 +18,12 @@ public class PlayerPunchBehaviour : MonoBehaviour {
 
 	void Update () {
 
-		if (Input.GetKey("left ctrl")) {
-			Fist.renderer.enabled = true;
-			_punchEndFrame = 7;
-		}
+
+
+		//if (UnityEngine.Joypad.GetKey("left ctrl")) {
+		//	Fist.renderer.enabled = true;
+		//	_punchEndFrame = 7;
+		//}
 
 		if (--_punchEndFrame <= 0) {
 			Fist.renderer.enabled = false;

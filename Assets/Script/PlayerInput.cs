@@ -18,23 +18,27 @@ public class PlayerInput : MonoBehaviour {
 	void Update () 
 	{
 
-		if (Input.GetKey (KeyCode.LeftArrow)) {
-			characterController.OnKeyDown(KeyCode.LeftArrow);
-		} 
-		
-		if (Input.GetKey (KeyCode.RightArrow)) {
-			characterController.OnKeyDown(KeyCode.RightArrow);
+		float horis = Input.GetAxis("Horizontal");
+		float vert = Input.GetAxis("Vertical");
+
+		float threshold = 0.1f;
+
+		if (horis < -threshold || Input.GetKey(KeyCode.LeftArrow)) {
+			characterController.OnKeyDown(JoypadCode.LEFT);
+		}
+		if (horis > threshold || Input.GetKey(KeyCode.RightArrow)) {
+			characterController.OnKeyDown(JoypadCode.RIGHT);
 		}
 
 
-		if (Input.GetKey(KeyCode.UpArrow)) {
-			characterController.OnKeyDown(KeyCode.UpArrow);
-		} 
-		if (Input.GetKey(KeyCode.DownArrow)) {
-			characterController.OnKeyDown(KeyCode.DownArrow);
+		if (vert > threshold || Input.GetKey(KeyCode.UpArrow)) {
+			characterController.OnKeyDown(JoypadCode.UP);
 		}
-		if (Input.GetKey(KeyCode.Space)) {
-			characterController.OnKeyDown(KeyCode.Space);
+		if (vert < -threshold || Input.GetKey(KeyCode.DownArrow)) {
+			characterController.OnKeyDown(JoypadCode.DOWN);
+		}
+		if (Input.GetButton("Jump")) {
+			characterController.OnKeyDown(JoypadCode.JUMP);
 		}
 	}
 }

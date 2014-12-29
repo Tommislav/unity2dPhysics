@@ -77,10 +77,10 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 			data.flags["isJumping"] = flag;
 		}
 		private bool JumpKeyPressedThisFrame() {
-			return data.inputMap.GetDownThisFrame(KeyCode.Space);
+			return data.inputMap.GetDownThisFrame(JoypadCode.JUMP);
 		}
 		private bool JumpKeyDown() {
-			return data.inputMap.GetIsDown(KeyCode.Space);
+			return data.inputMap.GetIsDown(JoypadCode.JUMP);
 		}
 	}
 }

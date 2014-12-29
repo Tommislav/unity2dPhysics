@@ -11,14 +11,16 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 		public override void Process() {
 
-			if (data.inputMap.GetIsDown(KeyCode.LeftArrow)) {
+			if (data.inputMap.GetIsDown(JoypadCode.LEFT)) {
 				data.velocity.x = -0.1f;
 				data.dirX = -1;
 			}
-			if (data.inputMap.GetIsDown(KeyCode.RightArrow)) {
+			if (data.inputMap.GetIsDown(JoypadCode.RIGHT)) {
 				data.velocity.x = 0.1f;
 				data.dirX = 1;
 			}
+
+			data.debug.AddLine("Horiz: " + Input.GetAxis("Horizontal"));
 		}
 
 	}

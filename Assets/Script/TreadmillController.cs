@@ -8,14 +8,6 @@ public class TreadmillController : MonoBehaviour {
 
 	private GameObject _collidingObject;
 
-	/*void Update () {
-		if (_collidingObject != null) {
-			Debug.Log("TreadmillController.update()");
-			
-		}
-	}*/
-
-
 	public void CharacterController2dEnterY(GameObject colliding) {
 		_collidingObject = colliding;
 		DispatchPhysicsEvent(new Vector2(movement, 0.0f));

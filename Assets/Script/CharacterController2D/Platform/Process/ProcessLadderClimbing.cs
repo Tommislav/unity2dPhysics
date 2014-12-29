@@ -51,8 +51,8 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 			if (GetIsClimbing()) {
 
-				bool keyUp = data.inputMap.GetIsDown(KeyCode.UpArrow);
-				bool keyDown = data.inputMap.GetIsDown(KeyCode.DownArrow);
+				bool keyUp = data.inputMap.GetIsDown(JoypadCode.UP);
+				bool keyDown = data.inputMap.GetIsDown(JoypadCode.DOWN);
 
 				if (keyUp) {
 					data.velocity.y = 0.1f;
@@ -71,8 +71,8 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 
 		private bool GetShouldStartClimbLadder() {
-			int frameUp = data.inputMap.GetFrameKeyPressed(KeyCode.UpArrow);
-			int frameDown = data.inputMap.GetFrameKeyPressed(KeyCode.DownArrow);
+			int frameUp = data.inputMap.GetFrameKeyPressed(JoypadCode.UP);
+			int frameDown = data.inputMap.GetFrameKeyPressed(JoypadCode.DOWN);
 
 			int frame = (frameUp > frameDown) ? frameUp : frameDown;
 			if (frame > 0 && frame != _ladderKeyPress) {
