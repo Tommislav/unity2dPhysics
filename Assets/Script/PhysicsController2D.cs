@@ -190,6 +190,10 @@ public class PhysicsController2D : MonoBehaviour {
 	
 	void HandleHitInfo ()
 	{
+		GlobalDebug.AddDebugLine(2, "hitY " + debugGO(_hitY));
+		GlobalDebug.AddDebugLine(3, "lastHitY " + debugGO(_lastHitY));
+		GlobalDebug.AddDebugLine(4, "same: " + (_hitY == _lastHitY));
+
 		// --- X axis ---
 
 		/*if (_hitX != _lastHitX && _hitX != null && _lastHitX != null) {
@@ -217,12 +221,14 @@ public class PhysicsController2D : MonoBehaviour {
 		// --- Y axis ---
 
 		if (_hitY != null || _lastHitY != null) {
-			/*if (_hitY != _lastHitY) {
+
+			// Went from one hitare directly to another
+			if (_hitY != null && _lastHitY != null && _hitY != _lastHitY) {
 				SendHitMessage("Exit", "Y", _lastHitY);
 				SendHitMessage("Enter", "Y", _hitY);
 				SendHitMessage("Update", "Y", _hitY);
 				return;
-			}*/
+			}
 			
 			if (_hitY != null) {
 				if (_lastHitY == null) {
@@ -236,6 +242,11 @@ public class PhysicsController2D : MonoBehaviour {
 				SendHitMessage("Exit", "Y", _lastHitY);
 			}
 		}
+	}
+
+	private string debugGO(GameObject obj) {
+		if (obj == null) { return "null"; }
+		return (obj.name + ", uid:" + obj.GetInstanceID());
 	}
 
 	void SendHitMessage(string enterUpdateExit, string axis, GameObject collideWith) {
