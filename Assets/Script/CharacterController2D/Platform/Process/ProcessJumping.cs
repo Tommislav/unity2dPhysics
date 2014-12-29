@@ -23,7 +23,7 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 			bool wasJumping = (GetJumpFlag() == 1);
 			bool jumpKeyPressedThisFrame = JumpKeyPressedThisFrame();
 			bool climbingLadder = data.GetFlag("onLadder");
-			bool onGround = data.collisionState.IsOnGround;
+			bool onGround = data.collisionInfo.IsOnGround;
 			onGround |= climbingLadder;
 
 			bool jumpDisabled = data.GetFlag("jumpDisabled");

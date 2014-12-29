@@ -12,6 +12,8 @@ namespace Assets.Script.CharacterController2D {
 		private SharedProcessData _sharedData;
 		private CharacterDebug _debug;
 
+		public SharedProcessData data { get { return _sharedData;  } }
+		public CharacterDebug debug { get { return _debug; } }
 
 		protected virtual void SetupProcesses() {}
 
@@ -38,7 +40,7 @@ namespace Assets.Script.CharacterController2D {
 			_sharedData = data;
 			_sharedData.gameObject = this.gameObject;
 			_sharedData.inputMap = new InputMap();
-			_sharedData.collisionState = getCollisionStateComponent();
+			_sharedData.collisionInfo = getCollisionStateComponent();
 			_sharedData.debug = _debug;
 			for (int i = 0; i < _processables.Count; i++) {
 				_processables[i].Init(_sharedData);
@@ -77,7 +79,7 @@ namespace Assets.Script.CharacterController2D {
 			physicsController.SetDisableCloudCollision(_sharedData.disableCloudCollision);
 			physicsController.SetVelocity(GetVelocity());
 
-			_debug.AddLine(_sharedData.collisionState.Debug());
+			_debug.AddLine(_sharedData.collisionInfo.Debug());
 		}
 
 		private Vector2 GetVelocity() {

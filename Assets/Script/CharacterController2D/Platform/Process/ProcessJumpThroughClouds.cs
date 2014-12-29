@@ -12,7 +12,7 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 		private int _fallingThrough;
 
 		public override bool IsRunning() {
-			return data.collisionState.IsOnGround || (_fallingThrough > 0);
+			return data.collisionInfo.IsOnGround || (_fallingThrough > 0);
 		}
 
 		public override void Process() {
