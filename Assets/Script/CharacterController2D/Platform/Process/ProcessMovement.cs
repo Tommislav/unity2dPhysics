@@ -20,7 +20,7 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 				data.dirX = 1;
 			}
 
-			data.debug.AddLine("Horiz: " + Input.GetAxis("Horizontal"));
+			//data.debug.AddLine("Horiz: " + Input.GetAxis("Horizontal"));
 		}
 
 	}

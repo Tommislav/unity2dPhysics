@@ -128,6 +128,8 @@ namespace Assets.Script.CharacterController2D {
 						_sharedData.externalVelocity.Remove(id);
 					}
 				}
+			} else if (e.type == PhysicsEvent.MOVE_BY) {
+				this.gameObject.transform.Translate(e.vector);
 			}
 		}
 	}

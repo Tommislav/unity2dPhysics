@@ -8,6 +8,7 @@ namespace Assets.Script.CharacterController2D {
 	public class PhysicsEvent {
 
 		public const string EXTERNAL_FORCE = "externalForce";
+		public const string MOVE_BY = "moveBy";
 
 		private string _type;
 		private int _uid;
