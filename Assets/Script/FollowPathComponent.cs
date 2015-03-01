@@ -17,16 +17,20 @@ class FollowPathComponent : MonoBehaviour {
 	public float MaxDistanceToGoal = 0.1f;
 	public bool IsMovingPlatform = true;
 
+	private CharacterDebug _debug;
+
 	private IEnumerator<Transform> _currentPoint;
 	private Vector3 _lastPos;
 	private GameObject _colliding;
-	private CollisionInfo _collidingColInfo;
+	//private CollisionInfo _collidingColInfo;
 
 	public void Start() {
 		if (Path == null) {
 			Debug.LogError("PATH IS NULL!", gameObject);
 			return;
 		}
+
+		_debug = gameObject.GetComponent<CharacterDebug>();
 
 		_lastPos = Vector3.zero;
 		_currentPoint = Path.GetPathsEnumerator();
@@ -58,39 +62,52 @@ class FollowPathComponent : MonoBehaviour {
 			HandleMovingPlatforms();
 			_lastPos = transform.position;
 		}
+
+		if (_debug != null) {
+			_debug.SetText("Colliding num: " + _collisionObjects.Count);
+		}
 	}
 
 	private void HandleMovingPlatforms() {
-		if (_colliding != null) {
+		// if (_colliding != null) {
 			Vector2 diff = transform.position - _lastPos;
 			DispatchPhysicsEvent(_colliding, diff);
-		}
+		//}
 	}
 
 
 
-
+	private List<GameObject> _collisionObjects = new List<GameObject>();
 
 
 	public void CharacterController2dEnterY(GameObject colliding) {
-		if (colliding.GetComponent<CollisionInfoComponent>() != null) {
-			_colliding = colliding;
-			_collidingColInfo = colliding.GetComponent<CollisionInfoComponent>().CollisionState;
+
+		if (!_collisionObjects.Contains(colliding)) {
+			_collisionObjects.Add(colliding);
 		}
+
+		//if (colliding.GetComponent<CollisionInfoComponent>() != null) {
+			_colliding = colliding;
+			//_collidingColInfo = colliding.GetComponent<CollisionInfoComponent>().CollisionState;
+		//}
 
 		//DispatchPhysicsEvent(colliding, new Vector2(movement, 0.0f));
 	}
 
 	public void CharacterController2dExitY(GameObject colliding) {
+		_collisionObjects.Remove(colliding);
 		_colliding = null;
-		_collidingColInfo = null;
+		//	_collidingColInfo = null;
 		//DispatchPhysicsEvent(colliding, new Vector2(0.0f, 0.0f));
 	
 	}
 
 	private void DispatchPhysicsEvent(GameObject toObj, Vector2 force) {
 		PhysicsEvent e = new PhysicsEvent(PhysicsEvent.MOVE_BY, gameObject.GetInstanceID(), force);
-		toObj.SendMessage("OnPhysicsEvent", e, SendMessageOptions.DontRequireReceiver);
+		foreach (GameObject go in _collisionObjects) {
+			go.SendMessage("OnPhysicsEvent", e, SendMessageOptions.DontRequireReceiver);
+		}
+		// toObj.SendMessage("OnPhysicsEvent", e, SendMessageOptions.DontRequireReceiver);
 	}
 
 }
