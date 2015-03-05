@@ -77,7 +77,7 @@ public class PhysicsController2D : MonoBehaviour {
 		var localScale = this.transform.localScale;
 		var size = new Vector3 (_collider.size.x * Mathf.Abs(localScale.x), _collider.size.y * Mathf.Abs(localScale.y), 2);
 		var halfSize = size / 2f;
-		var center = new Vector3 (_collider.center.x * localScale.x, _collider.center.y * localScale.y);
+		var center = new Vector3 (_collider.offset.x * localScale.x, _collider.offset.y * localScale.y);
 		var pos = new Vector2(transform.position.x, transform.position.y);
 
 		_rect = new Rect (pos.x + center.x - halfSize.x, pos.y + center.y + halfSize.y, size.x, size.y);

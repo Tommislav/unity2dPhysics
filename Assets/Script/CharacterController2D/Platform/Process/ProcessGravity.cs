@@ -26,6 +26,9 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 				_veclocityY = -_world.gravity;
 			} else {
 				_veclocityY = data.velocity.y - _world.gravity;
+				if (data.GetFlag("wallGlide")) {
+					_veclocityY *= 0.7f;
+				}
 			}
 
 			if (_veclocityY < MAX_FALLSPEED) { _veclocityY = MAX_FALLSPEED;	} // clamp

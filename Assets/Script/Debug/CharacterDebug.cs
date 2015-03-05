@@ -18,7 +18,7 @@ public class CharacterDebug : MonoBehaviour {
 		TextMesh tm = debugOutput.GetComponent<TextMesh>();
 		tm.text = _text;
 
-		float height = debugOutput.renderer.bounds.size.y;
+		float height = debugOutput.GetComponent<Renderer>().bounds.size.y;
 		tm.transform.localPosition = new Vector3(tm.transform.localPosition.x, _startY + height, 0);
 	}
 

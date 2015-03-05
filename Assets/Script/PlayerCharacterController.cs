@@ -10,6 +10,7 @@ namespace Assets.Script.CharacterController2D.Platform {
 
 			this.AddProcessable(new ProcessLadderClimbing());
 			this.AddProcessable(new ProcessJumpThroughClouds());
+			this.AddProcessable(new ProcessWallJump());
 			this.AddProcessable(new ProcessGravity());
 			this.AddProcessable(new ProcessMovement());
 			this.AddProcessable(new ProcessFriction());

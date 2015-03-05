@@ -19,7 +19,7 @@ public class RaycastTestScript : MonoBehaviour {
 
 		var localScale = this.transform.localScale;
 		var halfSize = new Vector3 (_collider.size.x * Mathf.Abs(localScale.x), _collider.size.y * Mathf.Abs(localScale.y), 2) / 2f;
-		var center = new Vector3 (_collider.center.x * localScale.x, _collider.center.y * localScale.y);
+		var center = new Vector3 (_collider.offset.x * localScale.x, _collider.offset.y * localScale.y);
 
 		Vector2 from = transform.position - new Vector3(center.x, center.y + halfSize.y);
 

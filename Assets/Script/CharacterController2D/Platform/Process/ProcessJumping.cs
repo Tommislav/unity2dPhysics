@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
-
+﻿
 namespace Assets.Script.CharacterController2D.Platform.Process {
 	class ProcessJumping : Processable {
 
@@ -11,15 +6,22 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 		private const float JUMP_STR = 0.08f;
 		private const float MAX_JUMP_STR = 0.30f;
 		private float _currJumpTimeLeft;
-		private float _jumpVelocity;
+		private float _jumpVelocityY;
+		private float _jumpVelocityX;
 
 		protected override void Setup() {
 			SetJumpFlag(0);
-			_jumpVelocity = 0;
+			_jumpVelocityY = 0;
+			_jumpVelocityX = 0;
 			data.flags["jumpDisabled"] = 0;
+			data.flags["doJump"] = 0;
 		}
 
 		public override bool IsRunning() {
+
+			bool forcedJump = data.flags["doJump"] == 1;
+			if (forcedJump) { return true;  }
+
 			bool wasJumping = (GetJumpFlag() == 1);
 			bool jumpKeyPressedThisFrame = JumpKeyPressedThisFrame();
 			bool climbingLadder = data.GetFlag("onLadder");
@@ -42,6 +44,12 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 				_currJumpTimeLeft = JUMP_TIME;
 				SetJumpFlag(1);
 				applyJumpVelocity();
+
+				if (data.flags["jumpX"] != 0) {
+					_jumpVelocityX = (float)data.flags["jumpX"] / 100f;
+					data.flags["jumpX"] = 0;
+				}
+
 				return;
 			}
 
@@ -52,20 +60,24 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 
 			if (_currJumpTimeLeft <= 0 || !JumpKeyDown()) {
 				SetJumpFlag(0);
-				_jumpVelocity = 0;
+				_jumpVelocityY = 0;
 			}
 
 		}
 
 		private void applyJumpVelocity() {
-			_jumpVelocity += JUMP_STR;
-			if (_jumpVelocity > MAX_JUMP_STR) {
-				_jumpVelocity = MAX_JUMP_STR;
-			} else if (_jumpVelocity < -MAX_JUMP_STR) {
-				_jumpVelocity = -MAX_JUMP_STR;
+			_jumpVelocityY += JUMP_STR;
+			if (_jumpVelocityY > MAX_JUMP_STR) {
+				_jumpVelocityY = MAX_JUMP_STR;
+			} else if (_jumpVelocityY < -MAX_JUMP_STR) {
+				_jumpVelocityY = -MAX_JUMP_STR;
 			}
 
-			data.velocity.y = _jumpVelocity;
+			_jumpVelocityX *= 0.5f;
+
+			data.velocity.y = _jumpVelocityY;
+			data.velocity.x += _jumpVelocityX;
+			
 		}
 
 
@@ -77,6 +89,10 @@ namespace Assets.Script.CharacterController2D.Platform.Process {
 			data.flags["isJumping"] = flag;
 		}
 		private bool JumpKeyPressedThisFrame() {
+			if (data.flags["doJump"] == 1) {
+				data.flags["doJump"] = 0;
+				return true;
+			}
 			return data.inputMap.GetDownThisFrame(JoypadCode.JUMP);
 		}
 		private bool JumpKeyDown() {

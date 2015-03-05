@@ -29,7 +29,7 @@ class GlobalDebug:MonoBehaviour {
 		}
 		s += debug;
 
-		guiText.text = s;
+		GetComponent<GUIText>().text = s;
 		debug = "";
 	}
 
